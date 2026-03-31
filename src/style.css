@@ -1,0 +1,604 @@
+/* ================================
+   RESET
+   Elimina márgenes y paddings por 
+   defecto de todos los elementos
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* el padding no suma al ancho total */
+}
+
+/* ================================
+   VARIABLES GLOBALES
+   Definidas en :root para usarlas
+   en todo el archivo con var()
+================================ */
+:root {
+  --primary: #1B3A6B;      /* azul marino — color principal */
+  --secondary: #C9A84C;    /* dorado — color de acento */
+  --light: #F8F9FA;        /* gris muy claro — fondo de secciones */
+  --text: #2C2C2C;         /* casi negro — color de texto */
+  --white: #FFFFFF;
+  --max-width: 1100px;     /* ancho máximo del contenido */
+  --shadow: 0 4px 20px rgba(0,0,0,0.1); /* sombra reutilizable */
+}
+
+/* ================================
+   BASE
+   Estilos generales del body y
+   elementos comunes
+================================ */
+body {
+    font-family: "Roboto", sans-serif;
+  color: var(--text);
+  background: var(--white);
+  line-height: 1.7; /* espaciado entre líneas para mejor lectura */
+}
+
+a {
+  text-decoration: none; /* saca el subrayado de los links */
+  color: inherit;        /* hereda el color del padre */
+}
+
+img {
+  max-width: 100%; /* evita que las imágenes se salgan del contenedor */
+}
+
+/* Contenedor centrado con ancho máximo */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;    /* centra horizontalmente */
+  padding: 0 24px;   /* respiro en los costados */
+}
+
+/* ================================
+   NAVBAR
+   Barra de navegación fija arriba
+================================ */
+.navbar {
+  position: fixed;   /* se queda pegada aunque hagas scroll */
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--white);
+  box-shadow: var(--shadow);
+  z-index: 100;      /* encima de todo el contenido */
+  padding: 16px 0;
+}
+
+/* Flex para logo a la izquierda y links a la derecha */
+.navbar__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar__logo {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+}
+
+/* Links del nav en fila */
+.navbar__links {
+  display: flex;
+  list-style: none;
+  gap: 32px;
+  align-items: center;
+}
+
+.navbar__links a {
+  color: var(--text);
+  font-size: 15px;
+  transition: color 0.2s ease; /* cambio de color suave al hover */
+}
+
+.navbar__links a:hover {
+  color: var(--primary);
+}
+
+/* Botón CTA del navbar */
+.navbar__cta {
+  background: var(--primary);
+  color: var(--white) !important;
+  padding: 10px 22px;
+  border-radius: 6px;
+  transition: background 0.2s ease, transform 0.2s ease !important;
+}
+
+.navbar__cta:hover {
+  background: var(--secondary) !important;
+  transform: translateY(-2px); /* sube levemente al hacer hover */
+}
+
+/* ================================
+   HERO
+   Primera sección visible —
+   ocupa toda la pantalla
+================================ */
+.hero {
+  min-height: 100vh; /* ocupa al menos el 100% de la pantalla */
+  display: flex;
+  align-items: center;
+  padding-top: 80px; /* espacio para que el navbar no tape el contenido */
+  background: linear-gradient(135deg, #f8f9fa 60%, #e8eef7 100%);
+}
+
+/* Grid de 2 columnas: texto | imagen */
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+/* Tag pequeño arriba del título */
+.hero__tag {
+  font-size: 13px;
+  color: var(--secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+/* Título principal — clamp() adapta el tamaño según la pantalla */
+.hero__title {
+  font-size: clamp(32px, 5vw, 52px);
+  color: var(--primary);
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.hero__subtitle {
+  font-size: 17px;
+  color: #666;
+  line-height: 1.75;
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+/* Botones en fila */
+.hero__cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap; /* si no entran, bajan a la siguiente línea */
+}
+
+/* ================================
+   BOTONES
+   Estilos base y variantes
+================================ */
+.btn {
+  padding: 14px 28px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* Botón sólido — fondo azul */
+.btn--primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn--primary:hover {
+  background: var(--secondary); /* cambia a dorado al hover */
+  transform: translateY(-2px);
+}
+
+/* Botón con borde — sin fondo */
+.btn--outline {
+  border: 2px solid var(--primary);
+  color: var(--primary);
+}
+
+.btn--outline:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+/* Placeholder de la foto en el hero */
+.hero__photo-placeholder {
+  width: 100%;
+  height: 480px;
+  background: linear-gradient(135deg, var(--primary), #2d5a9e);
+  border-radius: 16px;
+  opacity: 0.15;
+}
+
+/* ================================
+   SERVICIOS
+   Grid de cards con los servicios
+================================ */
+.servicios {
+  padding: 80px 0; /* arriba y abajo — sin padding lateral (lo maneja .container) */
+  background-color: var(--light);
+}
+
+.servicios h2 {
+  color: var(--primary);
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 16px;
+}
+
+/* Párrafo introductorio centrado */
+.servicios .container > p {
+  color: var(--text);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Grid de 3 columnas para las cards */
+.serviciosgrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+
+/* Card individual */
+.serviciocard {
+  padding: 32px;
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* animación suave */
+}
+
+/* Sube al hacer hover */
+.serviciocard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(27, 58, 107, 0.2);
+}
+
+.servicioicon {
+  font-size: 40px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.serviciocard h3 {
+  color: var(--primary);
+  margin-bottom: 8px;
+}
+
+.serviciocard p {
+  color: var(--text);
+  line-height: 1.75;
+  font-size: 15px;
+}
+.sobremi{
+  padding: 80px 0; /* arriba y abajo — sin padding lateral (lo maneja .container) */
+  background-color: var(--white);
+}
+.sobremi__inner{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+
+.sobremi__foto-placeholder{
+  width: 100%;
+  height: 480px;
+  background: linear-gradient(135deg, var(--primary), #2d5a9e);
+  border-radius: 16px;
+  opacity: 0.15;
+}
+.sobremi__tag{
+   font-size: 13px;
+  color: var(--secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  font-weight: bold;
+}
+
+.sobremi__contenido h2{
+  font-size: 32px;
+  margin:12px 0 ;
+  color: var(--primary);
+}
+.sobremi__contenido p{
+  color: var(--text);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.testimonios{
+    padding: 80px 0;
+    background-color: var(--light);
+}
+.testimonios h2{
+  color: var(--primary);
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 16px;
+}
+.testimonios .container > p{
+   color: var(--text);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.testimonios__grid{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.testimonios__card{
+  padding: 32px;
+  border-radius: 12px;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.testimonios__card:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(27, 58, 107, 0.2);
+}
+.testimonio__texto{
+  font-size: 15px;
+  margin-bottom: 24px;
+  line-height: 1.8;
+  color: var(--text);
+  font-style: italic;
+}
+.testimonio__autor{
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.testimonio__avatar{
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    justify-content:center ;
+    align-items: center;
+    display: flex;
+    font-size: 14PX;
+    font-weight: bold;
+    background-color: var(--primary);
+    color: white;
+}
+.testimonio__autor strong{
+  display: block;
+  color: var(--primary);
+}
+.testimonio__autor span{
+  font-size: 13px;
+  color: var(--text);
+}
+.contacto{
+    padding: 80px 0;
+    background-color: var(--white);
+}
+.contacto h2{
+      color: var(--primary);
+  text-align: center;
+  font-size: 35px;
+  margin-bottom: 16px;
+}
+.contacto .container > p{
+   color: var(--text);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contacto__form{
+    max-width: 600px;
+    margin: 48px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+ 
+}
+.contacto__grupo {
+  display:flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.contacto__grupo label{
+  font-size: 14px;
+  color: var(--primary);
+  font-weight: bold;
+}
+.contacto__grupo input,
+.contacto__grupo textarea{
+  
+  padding: 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+input:focus,
+textarea:focus{
+  border-color: var(--primary);
+}
+textarea{
+  resize: vertical;
+  
+}
+button{
+    align-self: flex-start;
+}
+
+/* WHATSAPP FLOTANTE */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 56px;
+  height: 56px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: white;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(37, 211, 102, 0.5);
+}
+
+/* ================================
+   ANIMACIONES DE ENTRADA
+================================ */
+
+/* Definición de las animaciones */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Estado inicial — elementos invisibles antes de animar */
+.animar {
+  opacity: 0;
+}
+
+/* Cuando el elemento entra en pantalla, se activa esta clase */
+.animar.visible {
+  animation: fadeUp 0.6s ease forwards;
+}
+
+/* Delays escalonados para que no aparezcan todos juntos */
+.animar:nth-child(1) { animation-delay: 0s;   }
+.animar:nth-child(2) { animation-delay: 0.1s; }
+.animar:nth-child(3) { animation-delay: 0.2s; }
+.animar:nth-child(4) { animation-delay: 0.3s; }
+.animar:nth-child(5) { animation-delay: 0.4s; }
+
+/* ================================
+   RESPONSIVE — MOBILE FIRST
+   Todo lo de abajo aplica cuando
+   la pantalla es menor a 768px
+================================ */
+@media (max-width: 768px) {
+
+  /* NAVBAR — ocultamos los links, solo queda el logo */
+  .navbar__links {
+    display: none;
+  }
+
+  /* HERO — de 2 columnas a 1 columna */
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Ocultamos el placeholder de foto en mobile */
+  .hero__image {
+    display: none;
+  }
+
+  /* SERVICIOS — de 3 columnas a 1 columna */
+  .serviciosgrid {
+    grid-template-columns: 1fr;
+  }
+
+  /* SOBRE MÍ — de 2 columnas a 1 columna */
+  .sobremi__inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* Ocultamos el placeholder de foto en mobile */
+  .sobremi__foto {
+    display: none;
+  }
+
+  /* TESTIMONIOS — de 3 columnas a 1 columna */
+  .testimonios__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Reducimos el padding de todas las secciones */
+  .servicios,
+  .sobremi,
+  .testimonios,
+  .contacto {
+    padding: 48px 0;
+  }
+
+  /* Títulos más chicos en mobile */
+  .servicios h2,
+  .testimonios h2,
+  .sobremi__contenido h2,
+  .contacto h2 {
+    font-size: 26px;
+  }
+
+  /* Botón de WhatsApp más chico */
+  .whatsapp-btn {
+    width: 48px;
+    height: 48px;
+    font-size: 22px;
+    bottom: 20px;
+    right: 20px;
+  }
+}
+.footer{
+    padding: 40px 0 ;
+    background-color: var(--secondary);
+    color:var(--white);
+}
+.footer__inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+.footer__logo{
+    font-weight: bold;
+    font-size: 16px;
+    
+}
+.footer__copy{
+    font-size: 13px;
+    opacity: 0.7;
+    
+    
+    
+}
+.footer__links{
+    display: flex;
+    gap: 24px;
+}
+.footer__links a{
+    color: var(--white);
+    font-size: 13px;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+.footer__links a:hover{
+    opacity: 1;
+}
